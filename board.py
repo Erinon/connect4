@@ -14,15 +14,21 @@ class Board:
 
         self.turn = self.PLAYER_1
 
+        self.winner = None
+
     def make_move(self, column):
-        if column < 0 or column >= self.width or self.heights[column] >= self.height:
-            raise Exception('Invalid move.')
+        column -= 1
+        
+        if self.winner or column < 0 or column >= self.width or self.heights[column] >= self.height:
+            return False
 
         self.heights[column] += 1
 
         self.board[-self.heights[column]][column] = self.turn
 
         self.change_turn()
+
+        return True
 
     def change_turn(self):
         if self.turn == self.PLAYER_1:
@@ -34,7 +40,7 @@ class Board:
         return '\n'.join([' '.join([str(c) for c in r]) for r in self.board])
 
     def __repr__(self):
-        return '\n'.join([' '.join([str(c) for c in r]) for r in self.board])
+        return self.__str__()
 
 if __name__ == '__main__':
     board = Board(7, 6)
