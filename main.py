@@ -1,16 +1,35 @@
 if __name__ == '__main__':
     import tkinter as tk
 
-    top = tk.Tk()
+    from board import Board
 
-    C = tk.Canvas(top, bg='blue', height=250, width=300)
+    BOARD_WIDTH = 7
+    BOARD_HEIGHT = 6
 
-    coord = 10, 50, 240, 210
-    arc = C.create_arc(coord, start=0, extent=150, fill='red')
-    
-    line = C.create_line(10, 10, 200, 200, fill='white')
-    
-    C.pack()
-    
-    top.mainloop()
+    WINDOW_WIDTH = 490
+    WINDOW_HEIGHT = 420
+    WINDOW_TITLE = 'Connect Four'
 
+    COLUMN_WIDTH = 70
+
+    board = Board(BOARD_WIDTH, BOARD_HEIGHT)
+
+    app = tk.Tk()
+    app.resizable(False, False)
+    app.geometry(f'{WINDOW_WIDTH}x{WINDOW_HEIGHT}')
+    app.title(WINDOW_TITLE)
+
+    canvas_width = COLUMN_WIDTH * BOARD_WIDTH
+    canvas_height = COLUMN_WIDTH * BOARD_HEIGHT
+    canvas = tk.Canvas(app, bg='white', width=canvas_width, height=canvas_height)
+
+    for i in range(1, BOARD_WIDTH):
+        canvas.create_line(i*COLUMN_WIDTH, 0, i*COLUMN_WIDTH, WINDOW_HEIGHT)
+
+    canvas.create_oval(2, 2, COLUMN_WIDTH-2, COLUMN_WIDTH-2, fill='red', outline='')
+
+    canvas.bind('<Button-1>', lambda e: print(e.x))
+
+    canvas.pack()
+    
+    app.mainloop()
