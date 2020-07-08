@@ -37,6 +37,9 @@ class Board:
         
         self.status = self.PROGRESS
     
+    def get_column_height(self, column):
+        return self.heights[column - 1]
+
     def make_move(self, column):
         column -= 1
         
